@@ -1,13 +1,13 @@
 <template>
   <div class="index-container">
     <div class="sky-container">
-      <img src="../assets/images/蓝天.jpg">
     </div>
     <div class="beach-container">
-      <img src="../assets/images/海滩.jpg">
     </div>
     <div class="net-container">
-      <img src="../assets/images/网兜.png">
+      <div class="net">
+
+      </div>
     </div>
     
   </div>
@@ -28,25 +28,31 @@ export default {
   .index-container {
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   .sky-container, .beach-container {
     position: relative;
+    top: 0;
     width: 100%;
     margin: 0;
     padding: 0;
   }
 
   .sky-container {
-    height: 46.71%;
-    background: url('../assets/images/蓝天.jpg') 100% 100%;
+    height: 47%;
     z-index: 1;
+    background-image: url('../assets/images/蓝天.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   .beach-container {
-    height: 53.29%;
+    height: 53%;
     z-index: 3;
+    background-image: url('../assets/images/海滩.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   .sky-container img, .beach-container img {
@@ -56,12 +62,29 @@ export default {
     padding: 0;
   }
 
-  .net-container{
-    width: 90%;
+  .net-container {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     position: absolute;
+    top: 8%;
+  }
+
+  .net {
+    width: 7.2rem;
+    height: 9.1rem;
+    position: relative;
     animation: getBottle 4s linear;
     animation-fill-mode: forwards;
     z-index: 2;
+    background-image: url('../assets/images/网兜.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    top: 20%;
   }
 
   .net-container img{
@@ -72,40 +95,40 @@ export default {
   @keyframes getBottle
   {
     0%   {
-      top: 20%;
+      top: 0%;
       transform:rotate(0deg);
     }
     20%  {
-      top: 33%;
+      top: 43%;
       transform:rotate(-135deg);
     }
     30%  {
-      top: 33%;
+      top: 43%;
       transform:rotate(-135deg);
       margin-left: 15%;
     }
     40%  {
-      top: 33%;
+      top: 43%;
       transform:rotate(-135deg);
       margin-left: 0%;
     }
     55%  {
-      top: 33%;
+      top: 43%;
       transform:rotate(-135deg);
       margin-left: 15%;
     }
     65%  {
-      top: 33%;
+      top: 43%;
       transform:rotate(-135deg);
       margin-left: 0%;
     }
     80%  {
-      top: 33%;
+      top: 43%;
       transform:rotate(-135deg);
       margin-left: 15%;
     }
     100% {
-      top: 20%;
+      top: 0%;
       transform:rotate(-225deg);
     }
   }
