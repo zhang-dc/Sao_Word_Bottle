@@ -1,6 +1,6 @@
 <template>
   <div class="index-container">
-    
+    asdasd
   </div>
 </template>
 

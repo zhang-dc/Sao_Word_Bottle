@@ -3,22 +3,37 @@
     <div class="sky-container">
     </div>
     <div class="beach-container">
+      <div>
+        <button @click="lao" v-show="beforelao">捞一捞</button>
+        <button @click="relao" v-show="!laoable">再捞一次</button>
+      </div>
     </div>
     <div class="net-container">
-      <div class="net">
+      <div class="net" :class="getbottle">
 
       </div>
     </div>
-    
   </div>
 </template>
 
 <script>
 export default {
   name: 'getbottle',
+  methods: {
+    lao () {
+      this.getbottle = ''
+      this.getbottle = 'getbottle'
+      this.beforelao = false
+    },
+    relao () {
+      this.getbottle = ''
+    }
+  },
   data () {
     return {
-      
+      getbottle: '',
+      beforelao: true,
+      laoable: true
     }
   }
 }
@@ -78,8 +93,6 @@ export default {
     width: 7.2rem;
     height: 9.1rem;
     position: relative;
-    animation: getBottle 4s linear;
-    animation-fill-mode: forwards;
     z-index: 2;
     background-image: url('../assets/images/网兜.png');
     background-size: contain;
@@ -90,6 +103,11 @@ export default {
   .net-container img{
     width: 30%;
     margin-left: 35%;
+  }
+
+  .getbottle {
+    animation: getBottle 4s linear;
+    animation-fill-mode: forwards;
   }
 
   @keyframes getBottle
