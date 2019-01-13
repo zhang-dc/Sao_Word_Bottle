@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'getbottle',
+  name: 'Index',
   data () {
     return {
       
