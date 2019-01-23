@@ -4,6 +4,7 @@
     </div>
     <div class="beach-container">
       <div>
+        <button @click="diu">丢一个</button>
         <button @click="lao" v-show="beforelao">捞一捞</button>
         <button @click="relao" v-show="!laoable">再捞一次</button>
       </div>
@@ -18,13 +19,18 @@
 </template>
 
 <script>
+import Store from '@/util/Store'
 export default {
   name: 'getbottle',
   methods: {
+    diu () {
+      Store.throwBottle('ggg')
+    },
     lao () {
       this.getbottle = ''
       this.getbottle = 'getbottle'
       this.beforelao = false
+      Store.getBottle()
     },
     relao () {
       this.getbottle = ''
@@ -35,6 +41,12 @@ export default {
       getbottle: '',
       beforelao: true,
       laoable: true
+    }
+  },
+  created() {
+    Store.connectSocket('test')
+    Store.onBottleListChange = () => {
+      console.log(Store.bottleList)
     }
   }
 }
