@@ -66,8 +66,18 @@ const Store = {
     },
 
     receiveMessage(message) {
-        this.bottleList.push(message.bottle)
-        this.onBottleListChange && this.onBottleListChange()
+        if(message.bottle.error === -1) {
+            return
+        }
+        let flag = true
+        this.bottleList.forEach((bottle, i) => {
+            if(!('to' in bottle) && bottle.uuid === message.bottle.uuid) {
+                this.bottleList[i] = message.bottle
+                flag = false
+            }
+        })
+        console.log(flag)
+        flag ? this.bottleList.push(message.bottle) : this.onBottleListChange && this.onBottleListChange()
     },
 
     receiveBottleList(message) {

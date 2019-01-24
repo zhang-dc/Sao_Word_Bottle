@@ -23,7 +23,6 @@ if (typeof window === 'undefined') {
   let nativeSocket = WebSocket || MozWebSocket || window.WebSocket || window.MozWebSocket
   WS = function(addr){
     this.socket = new nativeSocket(addr)
-    console.log(this.socket)
   }
   WS.prototype.send = function(data) {
     let payload = JSON.stringify(data)
@@ -34,14 +33,12 @@ if (typeof window === 'undefined') {
   }
   WS.prototype = new Proxy(WS.prototype, {
     set: function(target, prop, value){
-      // console.log(prop)
       if (prop === 'socket') {
         Reflect.set(target, prop, value)
         return true
       } else if (prop === 'onmessage') {
         let wrapped = function(messageEvent) {
-          console.log(messageEvent)
-          if(messageEvent.data !== '')
+          if(typeof messageEvent.data === 'string')
             value(JSON.parse(messageEvent.data))
           else
             value(messageEvent.data)
@@ -55,7 +52,6 @@ if (typeof window === 'undefined') {
     },
     get: function(target, name) {
       if (name in target || name === 'socket') {
-        // console.log(name)
         return Reflect.get(target, name)
       } else {
         return Reflect.get(target.socket, name)

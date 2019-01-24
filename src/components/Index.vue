@@ -1,5 +1,11 @@
 <template>
   <div class="index-container">
+    <div class="tobeach">
+
+    </div>
+    <div class="mybottles">
+
+    </div>
     asda
     <div @click='asdasd(sadas)' class="aaa" v-show="ss">
 

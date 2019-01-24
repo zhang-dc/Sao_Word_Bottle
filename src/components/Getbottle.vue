@@ -11,7 +11,9 @@
     </div>
     <div class="net-container">
       <div class="net" :class="getbottle">
-
+        <div class="bottle">
+          <img src="../assets/images/漂流瓶.png">
+        </div>
       </div>
     </div>
     <div>sasd</div>
@@ -29,11 +31,11 @@ export default {
     lao () {
       this.getbottle = ''
       this.getbottle = 'getbottle'
-      this.beforelao = false
+      //this.beforelao = false
       Store.getBottle()
     },
     relao () {
-      this.getbottle = ''
+      //this.getbottle = ''
     }
   },
   data () {
@@ -58,7 +60,6 @@ export default {
     height: 100%;
     overflow-x: hidden;
   }
-
   .sky-container, .beach-container {
     position: relative;
     top: 0;
@@ -66,15 +67,13 @@ export default {
     margin: 0;
     padding: 0;
   }
-
   .sky-container {
     height: 47%;
-    z-index: 1;
+    z-index: -1;
     background-image: url('../assets/images/蓝天.jpg');
     background-size: cover;
     background-repeat: no-repeat;
   }
-
   .beach-container {
     height: 53%;
     z-index: 3;
@@ -82,14 +81,12 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
   }
-
   .sky-container img, .beach-container img {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
   }
-
   .net-container {
     width: 100%;
     height: 40%;
@@ -101,7 +98,6 @@ export default {
     position: absolute;
     top: 8%;
   }
-
   .net {
     width: 7.2rem;
     height: 9.1rem;
@@ -112,17 +108,27 @@ export default {
     background-repeat: no-repeat;
     top: 20%;
   }
-
   .net-container img{
     width: 30%;
     margin-left: 35%;
   }
-
   .getbottle {
     animation: getBottle 4s linear;
     animation-fill-mode: forwards;
   }
-
+  .bottle {
+    height: 50%;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .bottle img {
+    margin: 0;
+    height: 80%;
+    width: auto;
+  }
   @keyframes getBottle
   {
     0%   {
