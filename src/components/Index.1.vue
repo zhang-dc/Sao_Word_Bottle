@@ -1,6 +1,6 @@
 <template>
   <div class="index-container">
-    asda
+    
   </div>
 </template>
 
