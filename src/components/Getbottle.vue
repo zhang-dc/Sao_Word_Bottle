@@ -4,19 +4,18 @@
     </div>
     <div class="beach-container">
       <div>
-        <button @click="diu">丢一个</button>
-        <button @click="lao" v-show="beforelao">捞一捞</button>
-        <button @click="relao" v-show="!laoable">再捞一次</button>
+        <button @click="diu"><img src="../assets/images/扔一个.png"></button>
+        <button @click="lao" v-show="beforelao"><img src="../assets/images/捞捞看.png"></button>
       </div>
     </div>
     <div class="net-container">
       <div class="net" :class="getbottle">
-        <div class="bottle">
+        <img src="../assets/images/网兜.png">
+        <div class="bottle" v-show="!beforelao">
           <img src="../assets/images/漂流瓶.png">
         </div>
       </div>
     </div>
-    <div>sasd</div>
   </div>
 </template>
 
@@ -24,20 +23,6 @@
 import Store from '@/util/Store'
 export default {
   name: 'getbottle',
-  methods: {
-    diu () {
-      Store.throwBottle('ggg')
-    },
-    lao () {
-      this.getbottle = ''
-      this.getbottle = 'getbottle'
-      //this.beforelao = false
-      Store.getBottle()
-    },
-    relao () {
-      //this.getbottle = ''
-    }
-  },
   data () {
     return {
       getbottle: '',
@@ -50,7 +35,27 @@ export default {
     Store.onBottleListChange = () => {
       console.log(Store.bottleList)
     }
-  }
+  },
+  methods: {
+    diu () {
+      Store.throwBottle('ggg')
+    },
+    lao () {
+      setTimeout(()=>{
+        this.getbottle = 'getbottle'
+      },10);
+      setTimeout(()=>{
+        this.beforelao = false
+      },1000);
+      //this.getbottle = ''
+      //this.getbottle = 'getbottle'
+      //
+      //Store.getBottle()
+    },
+    relao () {
+      this.getbottle = ''
+    }
+  },
 }
 </script>
 
@@ -81,6 +86,24 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
   }
+  .beach-container div {
+    position: absolute;
+    bottom: 5rem;
+    height: 2.8rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .beach-container button {
+    background: none;
+    border: none;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
   .sky-container img, .beach-container img {
     width: 100%;
     height: 100%;
@@ -99,34 +122,35 @@ export default {
     top: 8%;
   }
   .net {
-    width: 7.2rem;
-    height: 9.1rem;
+    width: 6rem;
+    height: 10rem;
     position: relative;
-    z-index: 2;
-    background-image: url('../assets/images/网兜.png');
-    background-size: contain;
-    background-repeat: no-repeat;
     top: 20%;
   }
   .net-container img{
-    width: 30%;
-    margin-left: 35%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 4;
   }
   .getbottle {
     animation: getBottle 4s linear;
     animation-fill-mode: forwards;
   }
   .bottle {
-    height: 50%;
-    width: 90%;
+    height: 70%;
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    transform:rotate(-100deg);
+    z-index: 3;
   }
   .bottle img {
-    margin: 0;
-    height: 80%;
+    margin-left: 2rem;
+    margin-bottom: 3rem;
+    height: 100%;
     width: auto;
   }
   @keyframes getBottle
@@ -136,31 +160,31 @@ export default {
       transform:rotate(0deg);
     }
     20%  {
-      top: 43%;
+      top: 50%;
       transform:rotate(-135deg);
     }
     30%  {
-      top: 43%;
+      top: 50%;
       transform:rotate(-135deg);
       margin-left: 15%;
     }
     40%  {
-      top: 43%;
+      top: 50%;
       transform:rotate(-135deg);
       margin-left: 0%;
     }
     55%  {
-      top: 43%;
+      top: 50%;
       transform:rotate(-135deg);
       margin-left: 15%;
     }
     65%  {
-      top: 43%;
+      top: 50%;
       transform:rotate(-135deg);
       margin-left: 0%;
     }
     80%  {
-      top: 43%;
+      top: 50%;
       transform:rotate(-135deg);
       margin-left: 15%;
     }

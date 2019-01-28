@@ -5,8 +5,8 @@
     </div>
     <div class="list-container">
       <div class="list-button-container">
-        <div class="list-button">
-          <img src="../assets/images/漂流瓶00.png">
+        <div class="list-button" @click="Tolist">
+          <img src="../assets/images/漂流瓶00.png" :class="isToList">
         </div>
       </div>
       <div class="mybottles-container">
@@ -22,7 +22,7 @@
     </div>
     <div class="beach-container">
       <div class="beach-button" @click="Tobeach" :class="isToBeach">
-        <img src="../assets/images/网兜00.png" alt="">
+        <img src="../assets/images/网兜00.png">
       </div>
     </div>
   </div>
@@ -33,6 +33,7 @@ export default {
   data () {
     return {
       isToBeach: 'noToBeach',
+      isToList: 'noToList'
     }
   },
   methods: {
@@ -41,10 +42,16 @@ export default {
       setTimeout(()=>{
         this.$router.push('/getbottle')
       },700);
+    },
+    Tolist () {
+      this.isToList = 'toList'
+      setTimeout(()=>{
+        this.$router.push('/messagelist')
+      },700);
     }
   },
   created () {
-
+    document.title = '骚话瓶'
   }
 }
 </script>
@@ -100,10 +107,6 @@ export default {
   align-items: center;
   z-index: 3;
 }
-.list-button img {
-  animation: shinning 4s;
-  animation-iteration-count: infinite;
-}
 .mybottles-container {
   width: 60%;
   height: 100%;
@@ -149,25 +152,47 @@ export default {
   height: 100%;
 }
 .noToBeach {
-  animation: LRswing 2s;
+  animation: LRswing 1s;
   animation-iteration-count: infinite;
 }
 .toBeach {
   animation: FastRoll 0.8s;
 }
+.noToList {
+  animation: shinning 1s;
+  animation-iteration-count: infinite;
+}
+.toList {
+  animation: zip 0.8s;
+}
 @keyframes shinning
 {
   0% {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 2rem;
+    height: 2rem;
   }
   50% {
     width: 2.4rem;
     height: 2.4rem;
   }
   100% {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 2rem;
+    height: 2rem;
+  }
+}
+@keyframes zip
+{
+  0% {
+    width: 2rem;
+    height: 2rem;
+  }
+  50% {
+    width: 4rem;
+    height: 4rem;
+  }
+  100% {
+    width: 0rem;
+    height: 0rem;
   }
 }
 @keyframes LRswing {
