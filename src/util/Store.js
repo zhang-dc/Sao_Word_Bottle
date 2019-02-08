@@ -77,12 +77,15 @@ const Store = {
             }
         })
         console.log(flag)
-        flag ? this.bottleList.push(message.bottle) : this.onBottleListChange && this.onBottleListChange()
+        flag ? this.bottleList.push(message.bottle) : this.onBottleListChange
+        this.onBottleListChange()
     },
 
     receiveBottleList(message) {
-        this.bottleList = message.bottles
-        this.onBottleListChange && this.onBottleListChange()
+        if(message.bottles) {
+            this.bottleList = message.bottles
+            this.onBottleListChange && this.onBottleListChange()
+        }
     }
 }
 
