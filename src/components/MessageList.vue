@@ -4,15 +4,15 @@
       <img src="../assets/images/头部.jpg">
     </div>
     <div class="body-container">
-      <div class="message-container" v-for="item in bottleList" :key="item.bottleUUID">
+      <div class="message-container" v-for="item in chatList" :key="item.key" @click="toChat(item.chatnames)">
         <div class="title">
-          {{item.from}}
+          {{item.chatnames}}
         </div>
         <div class="last-message">
-          {{item.content}}
+          {{item.chatinfos}}
         </div>
       </div>
-    </div>
+    </div> 
     <div class="footer-container">
       <img src="../assets/images/尾部.jpg">                                 
     </div>
@@ -24,23 +24,76 @@ export default {
   name: 'Index',
   data () {
     return {
-      bottleList: null
+      userName: '',
+      bottleList: null,
+      chatList: [{}],
+      messages: []
     }
   },
   created () {
     document.title = '消息列表'
-    Store.connectSocket('test')
+    this.userName = sessionStorage.getItem('userName')
+    Store.connectSocket(this.userName)
     Store.onBottleListChange = () => {
       setTimeout(()=>{
         console.log(Store.bottleList)
-        this.bottleList = Store.bottleList
+        this.bottleList = Store.bottleList.reverse()
+        var namekey = 1
+        this.chatList[0] = {}
+        if (this.bottleList[0].from != this.userName) {
+          this.chatList[0].chatnames = this.bottleList[0].from
+          this.chatList[0].chatinfos = this.bottleList[0].content
+        } else if (this.bottleList[0].to != this.userName) {
+          this.chatList[0].chatnames = this.bottleList[0].to
+          this.chatList[0].chatinfos = this.bottleList[0].content
+        }
+        Object.keys(this.bottleList).forEach(key => {
+          let flag = 1
+          let bottleName = ''
+          if (this.bottleList[key].from != this.userName) {
+            bottleName = this.bottleList[key].from
+          } else if (this.bottleList[key].to != this.userName) {
+            bottleName = this.bottleList[key].to
+          }
+          for (let i = 0;i < namekey;i++) {
+            if (this.chatList[i].chatnames == bottleName) {
+              flag = 0
+              break
+            }
+            if (i == namekey-1 && flag == 1 && bottleName != '') {
+              let data = {
+                chatnames: bottleName,
+                chatinfos: this.bottleList[key].content
+              }
+              this.$set(this.chatList, namekey, data);
+              namekey ++
+              console.log(this.chatList)
+            }
+          }
+        })
       },100)
     }
   },
   mounted () {
     setTimeout(()=>{
       Store.getBottleList()
-    },1000);
+    },1000)
+  },
+  methods: {
+    toChat (name) {
+      let chatnum = 0
+      Object.keys(this.bottleList).forEach(key => {
+        if (this.bottleList[key].to == name || this.bottleList[key].from == name) {
+          this.messages[chatnum] = this.bottleList[key]
+          chatnum ++
+        }
+      })
+      setTimeout(()=> {
+        let str = JSON.stringify(this.messages)
+        sessionStorage.setItem('messages', str)
+        this.$router.push('/chat')
+      },100)
+    }
   }
 }
 </script>

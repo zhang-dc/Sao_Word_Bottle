@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/Index'
+import Login from '@/components/Login'
+import SignUp from '@/components/Signup'
 import Getbottle from '@/components/Getbottle'
 import MessageList from '@/components/MessageList'
-import ChatList from '@/components/ChatList'
+import Chat from '@/components/Chat'
 
 Vue.use(Router)
 
@@ -13,6 +15,16 @@ export default new Router({
       path: '/',
       name: 'Index',
       component: Index
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: SignUp
     },
     {
       path: '/getbottle',
@@ -25,9 +37,9 @@ export default new Router({
       component: MessageList
     },
     {
-      path: '/chatlist',
-      name: 'ChatList',
-      component: ChatList
+      path: '/chat',
+      name: 'Chat',
+      component: Chat
     }
   ]
 })

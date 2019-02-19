@@ -33,7 +33,8 @@ export default {
   data () {
     return {
       isToBeach: 'noToBeach',
-      isToList: 'noToList'
+      isToList: 'noToList',
+      userName: ''
     }
   },
   methods: {
@@ -52,6 +53,10 @@ export default {
   },
   created () {
     document.title = '骚话瓶'
+    this.userName = sessionStorage.getItem('userName')
+    if (!this.userName) {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

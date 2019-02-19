@@ -1,52 +1,37 @@
 <template>
     <div id="container">
-        <!-- <img id="background" :src="require('@/assets/background.jpg')"> -->
+        <div id="background"></div>
         <div id="chat">
             <div v-for="(message,index) in messages">
-                <div class="messagebox left-box" v-if="!message.self">
-                    <div class="avatarbox left-avatar">
-                        <img :src="message.avatar" class="avatar absolute-center">
-                    </div>
+                <div class="messagebox left-box" v-if="message.from != selfName">
                     <div class="messagebody left-body">
                         <p class="left-name">{{message.name}}</p>
-                        <div class="bubble">{{message.body}}</div>
-                        <span class="left-time">{{message.time}}</span>
-                        <!-- <span class="reply-button" @click="setReplyTo(index)">回复</span> -->
+                        <div class="bubble">{{message.content}}</div>
                     </div>
                 </div>
                 <div class="messagebox right-box" v-else>
                     <div class="messagebody right-body">
                         <p class="right-name">{{message.name}}</p>
                         <div class="bubble">{{message.body}}</div>
-                        <p class="right-time">{{message.time}}</p>
-                    </div>
-                    <div class="avatarbox right-avatar">
-                        <img :src="message.avatar" class="avatar absolute-center">
                     </div>
                 </div>
             </div>
         </div>
         <div id="input">
-            <div id="reply-to" v-if="replyTo">
-                <div @click="cancelReplyTo">X</div>
-                <div>正在回复{{replyTo}}</div>
-            </div>
-            <p>{{text}}</p>
             <textarea v-model="text"></textarea>
-            <div id="button" @click="addMessage"><p>发送</p></p></div>
+            <div id="button" @click="addMessage"><p>发送</p></div>
         </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Store from "@/util/Store";
 export default {
     name: 'QuestionList',
     data () {
         return {
-            selfYibanId: localStorage.yb_id,
-            selfAvatar: localStorage.head_img,
-            selfName: localStorage.teacher_name,
+            selfName: '',
             text: '',
             messages: [
                 // {
@@ -61,39 +46,24 @@ export default {
             replyHeadImage: ''
         }
     },
+    created () {
+        this.selfName = sessionStorage.getItem('username')
+        let str = sessionStorage.getItem('messages')
+        this.messages = JSON.parse(str)
+        console.log(this.messages)
+        Store.onBottleListChange = () => {
+          console.log(1)
+        }
+    },
     mounted () {
-        this.getMessages()
+
     },
     methods: {
-        sortByTime(a, b) {
-            // console.log(a,b, new Date(a.add_time))
-            return new Date(a.time) - new Date(b.time)
-        },
-        getMessages() {
-            this.messages.sort(this.sortByTime)
-            console.log(this.messages)
-            this.messages.forEach(v => {
-                let time = new Date(v.time)
-                v.time = `${time.getFullYear()}年${time.getMonth()+1}月${time.getDate()}日 ${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}`
-            })
-            setTimeout(function() {
-                window.scrollTo({
-                    top: document.getElementById('chat').scrollHeight
-                })
-            }, 20)
-        },
         addMessage() {
-            let time = new Date()
-            this.text = ''
+            let to = ''
+            //Store.sendMessage(to, content, uuid)
         },
-        // setReplyTo (index) {
-        //     this.replyTo = this.messages[index].name
-        //     this.replyHeadImage = this.messages[index].avatar
-        // },
-        // cancelReplyTo () {
-        //     this.replyTo = false
-        //     this.replyHeadImage = ''
-        // }
+        
     }
 }
 </script>
@@ -103,15 +73,21 @@ export default {
 p {
     margin: 0;
 }
+#container {
+    width: 100%;
+    height: 100%;
+}
 #background {
     position: fixed;
     top: 0;
     width: 100%;
     height: 100%;
     z-index: -1;
+    background: #DDDDDD;
 }
 #chat {
     width: 100%;
+    height: 93%;
     margin-bottom: 4rem;
     overflow: scroll;
 }
@@ -175,6 +151,7 @@ p {
     bottom: 0;
     background: #ffffff;
     width: 100%;
+    height: 7%;
     min-height: 3rem;
     max-height: 12rem;
     display: flex;

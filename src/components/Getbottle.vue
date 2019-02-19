@@ -32,7 +32,6 @@
       <div class="alert-frame">
         {{alertInfo}}
         <br>
-        <button @click="notget" v-show="isgetbottle" class="alert-button">扔回海里</button>
         <button @click="relao" class="relao alert-button">再捞一次</button>
       </div>
     </div>
@@ -47,6 +46,7 @@ export default {
   name: "getbottle",
   data() {
     return {
+      userName: '',
       getbottle: "",
       laoable: true,
       bottleInfo: null,
@@ -61,7 +61,8 @@ export default {
     };
   },
   created() {
-    Store.connectSocket("test0")
+    this.userName = sessionStorage.getItem('userName')
+    Store.connectSocket(this.userName)
     Store.onBottleListChange = () => {
       this.bottleInfo = Store.bottleList
       console.log(Store.bottleList)
